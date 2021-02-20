@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Com.Aircfg.Client.Models
+﻿namespace Com.Aircfg.Client.Models
 {
-   public class SearchModel
+    public class SearchModel
     {
         #region Public Properties
 

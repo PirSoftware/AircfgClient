@@ -9,13 +9,16 @@ namespace Com.Aircfg.Client.Extension
     {
         #region Public Methods
 
-        public static IHostBuilder AirCfg(this IHostBuilder hostBuilder, string aircfgId, string aircfgKey, string domain = "https://www.aircfg.com", Action<HostBuilderContext, IConfigurationBuilder> configureDelegate = null)
+        public static IHostBuilder AirCfg(this IHostBuilder hostBuilder,
+            string aircfgId, string aircfgKey,
+            string domain = "https://www.aircfg.com",              
+            Action<HostBuilderContext, IConfigurationBuilder> configureDelegate = null)
         {
             hostBuilder.ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config
-                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath) 
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
                     .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false)
                     .AddJsonStream(ConfigManager.GetConfig(aircfgId, aircfgKey, domain))
                     .AddEnvironmentVariables();

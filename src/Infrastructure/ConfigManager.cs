@@ -12,7 +12,10 @@ namespace Com.Aircfg.Client.Infrastructure
         public static Stream GetConfig(string id, string key, string domain)
         {
             byte[] byteArray = Encoding.UTF8.GetBytes(GetConfigString(id, key, domain));
-            return new MemoryStream(byteArray);
+
+            var m= new MemoryStream(byteArray);
+            m.Position = 0;
+            return m;
         }
 
         public static string GetConfigString(string id, string key, string domain)
@@ -23,7 +26,8 @@ namespace Com.Aircfg.Client.Infrastructure
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(new SearchModel() { Id = id, Key = key }), ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            return response.Content;
+            var obj= Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content);
+            return obj.ToString();
         }
 
         #endregion Public Methods
